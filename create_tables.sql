@@ -20,7 +20,7 @@ teacher_id REFERENCES teachers (id)
 DROP TABLE IF EXISTS students;
 CREATE TABLE students(
 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-fullname STRING
+fullname STRING,
 group_id REFERENCES [groups] (id)
 );
 
