@@ -14,7 +14,7 @@ DISCIPLINES = [
     'SQLite',
     'MySQL',
     'Oracle',
-    'SQL Server'
+    'SQL Server',
     'PostgreSQL',
     'SQL Alchemy',
     'MongoDB',
@@ -36,6 +36,7 @@ Choose any action and input number:
 11. Середній бал, який певний викладач ставить певному студентові.
 12. Оцінки студентів у певній групі з певного предмета на останньому занятті.'''
 QUERY_NUM = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+
 
 fake = faker.Faker()
 
@@ -81,14 +82,12 @@ def seed_grades(curs):
         if current_date.isoweekday() < 6:
             list_work_days.append(current_date)
         current_date += timedelta(days=1)
-    print(len(list_work_days))
     grades = []
     for day in list_work_days:
         random_discipline = randint(1, len(DISCIPLINES))
         random_student = [randint(1, len(DISCIPLINES)) for _ in range(5)]
         for student in random_student:
             grades.append((randint(1, 12), random_discipline, student, day.date()))
-    print(len(grades))
     curs.executemany(sql, grades)
 
 
@@ -127,6 +126,7 @@ if __name__ == '__main__':
         user_input = user_input.strip().lower()
         if user_input == 'y':
             create_db()
+            print('New database created.', end='')
             break
         elif user_input == 'n':
             break
@@ -142,3 +142,5 @@ if __name__ == '__main__':
                 pprint(execute_query(str_query))
             except FileNotFoundError as e:
                 print(e)
+        else:
+            print(f'Incorrect input: {user_input}. Try again...')
